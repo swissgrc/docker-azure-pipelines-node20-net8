@@ -1,5 +1,5 @@
 # Base image containing dependencies used in builder and final image
-FROM ghcr.io/swissgrc/azure-pipelines-dotnet:8.0.404 AS base
+FROM ghcr.io/swissgrc/azure-pipelines-dotnet:8.0.405 AS base
 
 
 # Builder image
@@ -45,7 +45,7 @@ COPY --from=build /etc/apt/sources.list.d/ /etc/apt/sources.list.d
 # Install NodeJS
 
 # renovate: datasource=github-tags depName=nodejs/node extractVersion=^v(?<version>.*)$
-ENV NODE_VERSION=20.18.1
+ENV NODE_VERSION=20.18.2
 
 RUN apt-get update -y && \
   # Install NodeJs
@@ -61,7 +61,7 @@ RUN apt-get update -y && \
 # renovate: datasource=github-tags depName=yarnpkg/yarn extractVersion=^v(?<version>.*)$
 ENV YARN_VERSION=1.22.22
 
-RUN npm install -g yarn@${YARN_VERSION} --ignore-scripts && \
+RUN npm install -g --ignore-scripts yarn@${YARN_VERSION} && \
   npm cache clean --force && \
   # Smoke test
   yarn --version
